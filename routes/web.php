@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,12 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', [CarController::class, 'index'])->name('cars.index');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/products', [DashboardController::class, 'products'])->name('products');
+    Route::get('/products/add', [DashboardController::class, 'addproducts'])->name('add.products');
+    Route::get('/other', [DashboardController::class, 'other'])->name('other');
+});
 
 require __DIR__.'/auth.php';

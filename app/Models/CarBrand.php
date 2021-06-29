@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class CarBrand extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
+    public function car()
+    {
+        return $this->hasMany(Car::class);
+    }
 }
